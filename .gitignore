@@ -27,5 +27,6 @@
 *.out
 *.app
 
+.DS_Store
 cmake-build-debug/
 calib_dataset/
