@@ -1,4 +1,4 @@
-## **Eigen C++ Hand Eye Calibration**
+## **Hand Eye Calibration Using Eigen C++**
 
 ***
 
@@ -86,12 +86,8 @@ Make sure the numbers of *base2flange_rpy.txt* and *T_B_hT.txt* in calib_dataset
 
 choose two adjacent matrices either in *T_A_hT.txt* or *T_B_hT.txt*. 
 
-
-
 ### **References**
 
 ***
 
 [1] Park, F.; Martin, B. Robot sensor calibration: Solving AX=XB on the Euclidean group. IEEE Trans. Robot. Autom. 1994, 10, 717–721, doi: 10.1109/70.326576.
-
-
