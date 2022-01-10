@@ -17,7 +17,6 @@
  * @calibrate_handeye
  */
 
-//using namespace std;
 
 
 // Declare calculateETH constructor
@@ -574,23 +573,10 @@ bool calculateEIH::implementTsai(vAvB vA, vAvB vB, hT4d &vX) {
     double coe1 = 2.0, coe2 = 1.0;
 
     vx = matS.completeOrthogonalDecomposition().pseudoInverse() * matV;
-    /*
-    std::cout << "vx is: " << "\n";
-    std::cout << vx << std::endl;
-    std::cout <<"\n";
-    */
+
     theta = coe1*atan(vx.norm());
-    /*
-    std::cout << "theta is: " << "\n";
-    std::cout << theta << std::endl;
-    std::cout <<"\n";
-    */
+
     vx.normalize();
-    /*
-    std::cout << "vx_normalized is: " << "\n";
-    std::cout << vx << std::endl;
-    std::cout <<"\n";
-    */
 
     Rcg = (Eigen::Matrix3d::Identity() * cos(theta) + sin(theta) * vec2Skew(vx) + (coe2 - cos(theta)) * vx * vx.transpose());
 

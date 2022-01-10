@@ -47,7 +47,7 @@ void pose_rpy2T_L(){
     std::string filepath;
     int dataPtsNum;
 
-    dataPtsNum = 12;
+    dataPtsNum = 12; //should be modified.
     filepath = "../calib_dataset/";
 
     dataset matrixOfPose;
@@ -85,7 +85,7 @@ void Calibrate_Park_Martin(){
     std::string filepath;
     int dataPtsNum2;
 
-    dataPtsNum2 = 12;
+    dataPtsNum2 = 12; //should be modified.
     filepath = "../calib_dataset/";
 
     dataset matrixOfhT, matrixOfhT_robot;
