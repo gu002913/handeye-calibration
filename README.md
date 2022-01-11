@@ -31,13 +31,13 @@ Make sure you are in the `cmake-build-debug` folder to run the exeutables.
 
 ### **Data Analysis(calib_dataset)**
 
-| File name                      | Description                                                                                              |
-| ------------------------------ | -------------------------------------------------------------------------------------------------------- |
-| base2flange_rpy.txt            | Flange pose recorded w.r.t robot base coordinate in roll pitch yaw (mm and deg).                         |
-| T_B_hT.txt                     | Relative transformation of checkerboard from previous pose to current pose( w.r.t camera coordinate).    |
-| <mark>T_A_hT.txt</mark>        | Relative transformation of robot flange from previous pose to current pose( w.r.t robot base coordinate. |
-| <mark>flange2cam.txt</mark>    | Homogeneous transformation from robot flange to camera.                                                  |
-| <mark>error_metrics.txt</mark> | Error analysis both in translation and rotation.                                                         |
+| File name                      | Description                                                                                               |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------- |
+| base2flange_rpy.txt            | Flange pose recorded w.r.t robot base coordinate in roll pitch yaw (mm and deg).                          |
+| T_B_hT.txt                     | Relative transformation of checkerboard from previous pose to current pose( w.r.t camera coordinate).     |
+| <mark>T_A_hT.txt</mark>        | Relative transformation of robot flange from previous pose to current pose( w.r.t robot base coordinate). |
+| <mark>flange2cam.txt</mark>    | Homogeneous transformation from robot flange to camera.                                                   |
+| <mark>error_metrics.txt</mark> | Error analysis both in translation and rotation.                                                          |
 
 <mark>Hightlighted .txt</mark> file is generated after executables.
 
@@ -91,3 +91,5 @@ choose two adjacent matrices either in *T_A_hT.txt* or *T_B_hT.txt*.
 ***
 
 [1] Park, F.; Martin, B. Robot sensor calibration: Solving AX=XB on the Euclidean group. IEEE Trans. Robot. Autom. 1994, 10, 717–721, doi: 10.1109/70.326576.
+[2] Tsai, R.; Lenz, R. A new technique for fully autonomous and efficient 3D robotics hand/eye calibration. IEEE Trans. Robot. Autom. 1989, 5, 345–358, doi: 10.1109/70.34770.
+[3] Park, F.; Martin, B. Robot sensor calibration: Solving AX=XB on the Euclidean group. IEEE Trans. Robot. Autom. 1994, 10, 717–721, doi: 10.1109/70.326576.

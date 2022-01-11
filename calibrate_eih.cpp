@@ -13,7 +13,7 @@
 /**
  * @author dingyi
  * @start_date 10/26/2021
- * @modified_date 11/10/2021
+ * @modified_date 01/10/2022
  * @calibrate_handeye
  */
 
@@ -104,8 +104,6 @@ bool calculateEIH::getTransFromRPY(dataset matrixOfPose, std::vector<hT4d> &hT_b
     std::vector<quaTmp> quaternion;
 
 
-
-
     for (int i = 0; i <= sizeOfTargets-1; i++ ){
         double rollTmp = matrixOfPose(i,sizeOfPose-3)*(M_PI/180); //deg2rad
         double pitchTmp = matrixOfPose(i,sizeOfPose-2)*(M_PI/180); //deg2rad
@@ -161,25 +159,25 @@ bool calculateEIH::getTransFromRotVec(dataset matrixOfPose, std::vector<hT4d> &h
 //        double sth = sin(theta);
 //        double vth = 1 - cos(theta);
         rotVec_tmp.normalize(); // [kx ky kz];
-        /*
-        double kx = rotVec_tmp(0);
-        double ky = rotVec_tmp(1);
-        double kz = rotVec_tmp(2);
-        rot3d rotMat_tmp;
-        rotMat_tmp(0,0) = kx*kx*vth+cth;
-        rotMat_tmp(0,1) = kx*ky*vth-kz*sth;
-        rotMat_tmp(0,2) = kx*kz*vth+ky*sth;
-        rotMat_tmp(1,0) = kx*ky*vth+kz*sth;
-        rotMat_tmp(1,1) = ky*ky*vth+cth;
-        rotMat_tmp(1,2) = ky*kz*vth-kx*sth;
-        rotMat_tmp(2,0) = kx*kz*vth-ky*sth;
-        rotMat_tmp(2,1) = ky*kz*vth+kx*sth;
-        rotMat_tmp(2,2) = kz*kz*vth+cth;
 
-        double beta;
-        beta = atan2(-rotMat_tmp(2,0),sqrt(rotMat_tmp(0,0)*rotMat_tmp(0,0)+rotMat_tmp(1,0)*rotMat_tmp(1,0)));
-        std::cout << beta <<"\n";
-        */
+//        double kx = rotVec_tmp(0);
+//        double ky = rotVec_tmp(1);
+//        double kz = rotVec_tmp(2);
+//        rot3d rotMat_tmp;
+//        rotMat_tmp(0,0) = kx*kx*vth+cth;
+//        rotMat_tmp(0,1) = kx*ky*vth-kz*sth;
+//        rotMat_tmp(0,2) = kx*kz*vth+ky*sth;
+//        rotMat_tmp(1,0) = kx*ky*vth+kz*sth;
+//        rotMat_tmp(1,1) = ky*ky*vth+cth;
+//        rotMat_tmp(1,2) = ky*kz*vth-kx*sth;
+//        rotMat_tmp(2,0) = kx*kz*vth-ky*sth;
+//        rotMat_tmp(2,1) = ky*kz*vth+kx*sth;
+//        rotMat_tmp(2,2) = kz*kz*vth+cth;
+//
+//        double beta;
+//        beta = atan2(-rotMat_tmp(2,0),sqrt(rotMat_tmp(0,0)*rotMat_tmp(0,0)+rotMat_tmp(1,0)*rotMat_tmp(1,0)));
+//        std::cout << beta <<"\n";
+
 
         Eigen::AngleAxisd rotMat_tmp(theta, rotVec_tmp);
 
@@ -196,6 +194,12 @@ bool calculateEIH::getTransFromRotVec(dataset matrixOfPose, std::vector<hT4d> &h
 }
 
 
+/**
+ * Calculate T_L from base2flange_rpy,txt
+ * @param hT_b2f
+ * @param fileName
+ * @param T_L
+ */
 void calculateEIH::CalculateT_A(std::vector<hT4d> hT_b2f, std::string fileName, std::vector<mat4d> &T_L) {
     mat4d T_L_tmp;
     int sizeOfTargets = hT_b2f.size();
@@ -215,7 +219,6 @@ void calculateEIH::CalculateT_A(std::vector<hT4d> hT_b2f, std::string fileName, 
 
 
 // Park and Martin's Method Starts Here ===================================================================================
-
 /**
  * Decompose A and B to R_A, R_B, t_A and t_B
  * @param hT_b2f
@@ -454,7 +457,6 @@ bool calculateEIH::writeError(std::vector<double> errMetrics, std::string fileNa
 
     return true;
 }
-
 // Park and Martin's Method Ends Here ===================================================================================
 
 
@@ -464,6 +466,14 @@ bool calculateEIH::writeError(std::vector<double> errMetrics, std::string fileNa
 
 // Tsai Lenz's Method Starts Here =======================================================================================
 
+/**
+ * Calculate matrices A and B
+ * @param T_R
+ * @param T_L
+ * @param v_A
+ * @param v_B
+ * @return
+ */
 bool calculateEIH::getAB_Tsai(std::vector<mat4d> T_R, std::vector<mat4d> T_L,
                                     vAvB &v_A, vAvB &v_B) {
     v_A.resize(4,8);
@@ -483,7 +493,13 @@ bool calculateEIH::getAB_Tsai(std::vector<mat4d> T_R, std::vector<mat4d> T_L,
 }
 
 
-
+/**
+ * Implement Tsai to calculate X in AX=XB
+ * @param vA
+ * @param vB
+ * @param vX
+ * @return
+ */
 bool calculateEIH::implementTsai(vAvB vA, vAvB vB, hT4d &vX) {
     vAvB vA1, vB1;
     rot3d Rcg;
@@ -526,48 +542,48 @@ bool calculateEIH::implementTsai(vAvB vA, vAvB vB, hT4d &vX) {
         va.normalize();
         vb.normalize();
 
-        /*
-        std::cout << "vA1 is: " << "\n";
-        std::cout << vA1 << std::endl;
-        std::cout <<"\n";
 
-        std::cout << "vB1 is: " << "\n";
-        std::cout << vB1 << std::endl;
-        std::cout <<"\n";
+//        std::cout << "vA1 is: " << "\n";
+//        std::cout << vA1 << std::endl;
+//        std::cout <<"\n";
+//
+//        std::cout << "vB1 is: " << "\n";
+//        std::cout << vB1 << std::endl;
+//        std::cout <<"\n";
+//
+//        std::cout << "va is: " << "\n";
+//        std::cout << va << std::endl;
+//        std::cout <<"\n";
+//
+//        std::cout << "vb is: " << "\n";
+//        std::cout << vb << std::endl;
+//        std::cout <<"\n";
 
-        std::cout << "va is: " << "\n";
-        std::cout << va << std::endl;
-        std::cout <<"\n";
 
-        std::cout << "vb is: " << "\n";
-        std::cout << vb << std::endl;
-        std::cout <<"\n";
-        */
 
-        /*
-        skew3d skew_tmp = getVec2Skew(va + vb);
-        vec3d vaMb_tmp = va - vb;
-        for (int k = 0; k <= 2; k++) {
-            matV(k + 3 * i, 0) = vaMb_tmp(k);
-            for (int j = 0; j <= 2; j++) {
-                matS(k + 3 * i, j) = skew_tmp(k, j);
-            }
-        }
-        */
+//        skew3d skew_tmp = getVec2Skew(va + vb);
+//        vec3d vaMb_tmp = va - vb;
+//        for (int k = 0; k <= 2; k++) {
+//            matV(k + 3 * i, 0) = vaMb_tmp(k);
+//            for (int j = 0; j <= 2; j++) {
+//                matS(k + 3 * i, j) = skew_tmp(k, j);
+//            }
+//        }
+
 
         matS.block(3*i,0,3,3) = vec2Skew(va+vb);
         matV.block(3*i,0,3,1) = va-vb;
     }
 
-    /*
-    std::cout << "matS is: " << "\n";
-    std::cout << matS << std::endl;
-    std::cout <<"\n";
 
-    std::cout << "matV is: " << "\n";
-    std::cout << matV << std::endl;
-    std::cout <<"\n";
-    */
+//    std::cout << "matS is: " << "\n";
+//    std::cout << matS << std::endl;
+//    std::cout <<"\n";
+//
+//    std::cout << "matV is: " << "\n";
+//    std::cout << matV << std::endl;
+//    std::cout <<"\n";
+
 
 
     double coe1 = 2.0, coe2 = 1.0;
@@ -592,15 +608,15 @@ bool calculateEIH::implementTsai(vAvB vA, vAvB vB, hT4d &vX) {
         matC.block(3*j,0,3,3) = matI - vA.block(0,4*j,3,3);
         matD.block(3*j,0,3,1) = vA.block(0,4*j+3,3,1) - Rcg*vB.block(0,4*j+3,3,1);
     }
-    /*
-    std::cout << "matC is: " << "\n";
-    std::cout << matC << std::endl;
-    std::cout <<"\n";
 
-    std::cout << "matD is: " << "\n";
-    std::cout << matD << std::endl;
-    std::cout <<"\n";
-    */
+//    std::cout << "matC is: " << "\n";
+//    std::cout << matC << std::endl;
+//    std::cout <<"\n";
+//
+//    std::cout << "matD is: " << "\n";
+//    std::cout << matD << std::endl;
+//    std::cout <<"\n";
+
 
     Tcg = matC.completeOrthogonalDecomposition().pseudoInverse()*matD;
     std::cout << "Tcg is: " << "\n";
@@ -614,27 +630,7 @@ bool calculateEIH::implementTsai(vAvB vA, vAvB vB, hT4d &vX) {
 
     return true;
 }
-
-
 // Tsai Lenz's Method Ends Here =========================================================================================
-
-
-//bool calculateEIH::getTransFromCamera(dataset matrixOfCamera, std::vector<mat4d> &hT_c2o) {
-//    int sizeOfCol = matrixOfCamera.cols();
-//    int sizeOfRow = matrixOfCamera.rows();
-//
-//    for(int i = 0; i <= sizeOfRow-1; i=i+4){
-//        mat4d hTTmp = matrixOfCamera.block(i,0,4,4);
-//        hT_c2o.push_back(hTTmp);
-//    }
-//
-//    return true;
-//}
-
-
-
-
-
 
 
 
@@ -694,5 +690,20 @@ vec3d calculateEIH::rm2Rv(rot3d R) {
 }
 
 
+/**
+ * Get data from camera
+ * @param matrixOfCamera
+ * @param hT_c2o
+ * @return
+ */
+bool calculateEIH::getTransFromCamera(dataset matrixOfCamera, std::vector<mat4d> &hT_c2o) {
+    int sizeOfCol = matrixOfCamera.cols();
+    int sizeOfRow = matrixOfCamera.rows();
 
+    for(int i = 0; i <= sizeOfRow-1; i=i+4){
+        mat4d hTTmp = matrixOfCamera.block(i,0,4,4);
+        hT_c2o.push_back(hTTmp);
+    }
 
+    return true;
+}

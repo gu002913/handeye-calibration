@@ -13,6 +13,13 @@
 #include <vector>
 
 
+/**
+ * @author dingyi
+ * @start_date 10/26/2021
+ * @modified_date 12/31/2021
+ * @calibrate_handeye
+ */
+
 
 typedef Eigen::Vector3d	  transl3d;      //3by1(double) translational vector(xyz)
 typedef Eigen::Vector3d   eul3d;         //3by1(double) euler angles vector(uvw)
@@ -41,16 +48,14 @@ public:
 
     bool getTransFromRPY(dataset matrixOfPose, std::vector<hT4d> &hT_b2f); //Homogeneous from base to flange
 
-    // bool getTransFromRotVec(dataset matrixOfPose, std::vector<hT4d> &hT_b2f);
+    bool getTransFromRotVec(dataset matrixOfPose, std::vector<hT4d> &hT_b2f);
 
 
-    // bool getTransFromCamera(dataset matrixOfCamera, std::vector<mat4d> &hT_c2o); //Homogeneous from camera to object
+    bool getTransFromCamera(dataset matrixOfCamera, std::vector<mat4d> &hT_c2o); //Homogeneous from camera to object
 
     void CalculateT_A(std::vector<hT4d> hT_b2f, std::string fileName, std::vector<mat4d> &T_L); // T_L
     bool DecomposeMatAB(std::vector<mat4d> T_L, std::vector<mat4d> T_R, std::vector<rot3d> &R_A, std::vector<rot3d> &R_B,
                         std::vector<transl3d> &t_A, std::vector<transl3d> &t_B);
-
-    skew3d vec2Skew(vec3d vecX);
 
     bool calibrateEIH_Rx(std::vector<rot3d> R_A, std::vector<rot3d> R_B, rot3d &R_x); //implementTsai to solve Rx from AX = XB with least square(more than 3 data points)
 
@@ -65,16 +70,15 @@ public:
     bool getAB_Tsai(std::vector<mat4d> T_R, std::vector<mat4d> T_L, vAvB &v_A, vAvB &v_B);
     bool implementTsai(vAvB vA, vAvB vB, hT4d &vX); //AX = XB, X = tsai(A,B) for 3 data points
 
-    vec3d rm2Rv(rot3d R); //Rotation matrix to rotation vector;
-
     bool writeMatrix(hT4d v_X, std::string fileName);
     bool writeError(std::vector<double> errMetrics, std::string fileName);
 
 
 private:
 
+    vec3d rm2Rv(rot3d R); //Rotation matrix to rotation vector;
 
-
+    skew3d vec2Skew(vec3d vecX);
 
 
 
