@@ -90,6 +90,17 @@ choose two adjacent matrices either in *T_A_hT.txt* or *T_B_hT.txt*.
 
 ***
 
-[1] Park, F.; Martin, B. Robot sensor calibration: Solving AX=XB on the Euclidean group. IEEE Trans. Robot. Autom. 1994, 10, 717–721, doi: 10.1109/70.326576.
-[2] Tsai, R.; Lenz, R. A new technique for fully autonomous and efficient 3D robotics hand/eye calibration. IEEE Trans. Robot. Autom. 1989, 5, 345–358, doi: 10.1109/70.34770.
-[3] Park, F.; Martin, B. Robot sensor calibration: Solving AX=XB on the Euclidean group. IEEE Trans. Robot. Autom. 1994, 10, 717–721, doi: 10.1109/70.326576.
+<a id="1">[1]</a> 
+Park, F.; Martin, B.
+Robot sensor calibration: Solving AX=XB on the Euclidean group.
+IEEE Trans. Robot. Autom. 1994, 10, 717–721, doi: 10.1109/70.326576. 
+
+<a id="2">[2]</a> 
+Tsai, R.; Lenz, R.
+A new technique for fully autonomous and efficient 3D robotics hand/eye calibration.
+IEEE Trans. Robot. Autom. 1989, 5, 345–358, doi: 10.1109/70.34770. 
+
+<a id="3">[3]</a> 
+Ali I, Suominen O, Gotchev A, Morales ER. 
+Methods for simultaneous robot-world-hand–eye calibration: A comparative study.
+Sensors. 2019 Jan;19(12):2837.
